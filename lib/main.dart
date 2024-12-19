@@ -1,22 +1,30 @@
 import 'package:flutter/material.dart';
-import 'package:pomodoro/screens/timerservice.dart';
+import 'package:pomodoro/app/screens/home_screen.dart';
+import 'package:pomodoro/app/core/services/timer_service.dart';
+import 'package:pomodoro/app/screens/settings_screen.dart';
 import 'package:provider/provider.dart';
 
-import 'screens/homeScreen.dart';
+void main() => runApp(
+    ChangeNotifierProvider<TimerService>(
+        create: (_) => TimerService(),
+        child: const MyApp(),
+    )
+);
 
-void main() => runApp(ChangeNotifierProvider<timerservice>(
-      create: (_) => timerservice(),
-      child: const myApp(),
-    ));
+class MyApp extends StatelessWidget {
+    const MyApp({super.key});
 
-class myApp extends StatelessWidget {
-  const myApp({super.key});
+    @override
+    Widget build(BuildContext context) {
+        return MaterialApp(
+            debugShowCheckedModeBanner: false,
 
-  @override
-  Widget build(BuildContext context) {
-    return const MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: homescreen(),
-    );
-  }
+            home: const HomeScreen(),
+            
+            routes: {
+                '/home': (context) => const HomeScreen(),
+                '/settings': (context) => const SettingsScreen(),
+            },
+        );
+    }
 }
