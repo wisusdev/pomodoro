@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:pomodoro/app/core/services/timer_service.dart';
 import 'package:pomodoro/app/widgets/progress.dart';
+import 'package:pomodoro/app/widgets/progress_bar.dart';
 import 'package:pomodoro/app/widgets/time_controller.dart';
 import 'package:pomodoro/app/widgets/timer_card.dart';
 import 'package:provider/provider.dart';
@@ -54,7 +55,12 @@ class HomeScreen extends StatelessWidget {
                             
                             TimerCard(),
                                                         
-                            SizedBox(height: 70),
+                            SizedBox(height: 50),
+
+                            ProgressBar(),
+
+                            SizedBox(height: 50),
+
                             
                             TimeController(),
                             
