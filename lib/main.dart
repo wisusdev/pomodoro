@@ -4,12 +4,19 @@ import 'package:pomodoro/app/core/services/timer_service.dart';
 import 'package:pomodoro/app/screens/settings_screen.dart';
 import 'package:provider/provider.dart';
 
-void main() => runApp(
-    ChangeNotifierProvider<TimerService>(
-        create: (_) => TimerService(),
-        child: const MyApp(),
-    )
-);
+void main() async {
+    WidgetsFlutterBinding.ensureInitialized();
+    await TimerService.init();
+
+    runApp(
+        MultiProvider(
+            providers: [
+                ChangeNotifierProvider<TimerService>(create: (_) => TimerService()),
+            ],
+            child: const MyApp(),
+        ),
+    );
+}
 
 class MyApp extends StatelessWidget {
     const MyApp({super.key});
