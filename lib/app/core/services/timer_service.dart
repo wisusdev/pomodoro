@@ -1,8 +1,11 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class TimerService extends ChangeNotifier {
 	late Timer timer;
+
+    static late SharedPreferences prefs;
   	
 	double currentduration = 1500; // 25 minutes
   	double selectedTime = 1500; // 25 minutes
@@ -12,6 +15,17 @@ class TimerService extends ChangeNotifier {
   	int rounds = 0;
   	int goal = 0;
   	String currentState = "FOCUS";
+
+    TimerService() {
+        currentduration = prefs.getDouble('selectedTime') ?? 1500;
+        selectedTime = prefs.getDouble('selectedTime') ?? 1500;
+        shortBreak = prefs.getDouble('shortBreak') ?? 300;
+        longBreak = prefs.getDouble('longBreak') ?? 1500;
+    }
+
+    static Future<void> init() async {
+        prefs = await SharedPreferences.getInstance();
+    }
 
   	void start() {
 		timerPlaying = true;
@@ -41,17 +55,20 @@ class TimerService extends ChangeNotifier {
   	}
 
   	void selectTime(double seconds) {
+        prefs.setDouble('selectedTime', seconds);
 		selectedTime = seconds;
 		currentduration = seconds;
 		notifyListeners();
   	}
 
     void selectShortBreak(double seconds) {
+        prefs.setDouble('shortBreak', seconds);
         shortBreak = seconds;
         notifyListeners();
     }
 
     void selectLongBreak(double seconds) {
+        prefs.setDouble('longBreak', seconds);
         longBreak = seconds;
         notifyListeners();
     }
